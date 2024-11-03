@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines Game</title>
+    <style>
+        /* Basic styling for the game page */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        label, #score {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            width: 80vmin;
+            height: 80vmin;
+            max-width: 500px;
+            max-height: 500px;
+            margin-top: 20px;
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #444;
+            color: #fff;
+            font-size: 3vmin;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.1s;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #666;
+            transform: scale(1.05);
+        }
+
+        .revealed {
+            background-color: #e0e0e0;
+            color: #333;
+            pointer-events: none;
+        }
+
+        .explosion {
+            animation: explode 0.5s forwards;
+        }
+
+        @keyframes explode {
+            0% { background-color: red; transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { background-color: transparent; transform: scale(0); }
+        }
+
+        /* Button styling */
+        button, input[type="number"] {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            outline: none;
+            color: #fff;
+            background-color: #6a11cb;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: #2575fc;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #restartGame {
+            display: none;
+            background-color: #ff6f61;
+            margin-top: 15px;
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 500px) {
+            h1 { font-size: 2rem; }
+            label, #score { font-size: 1rem; }
+            #grid { width: 90vmin; height: 90vmin; }
+        }
+
+        @media (max-width: 400px) {
+            .cell { font-size: 4vmin; }
+            button, input[type="number"] { font-size: 0.9rem; padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mines Game</h1>
+    <label for="mines">Enter number of mines (1-7): </label>
+    <input type="number" id="mines" value="3" min="1" max="7">
+    <button id="startGame">Start Game</button>
+    <div id="grid"></div>
+    <div id="score">Score: 0</div>
+    <button id="restartGame">Restart Game</button>
+
+    <script>
+        const size = 7; // Grid size 7x7
+        let mines = 0;
+        let board = [];
+        let revealed = [];
+        let score = 0;
+        let gameOver = false;
+
+        const createBoard = () => {
+            board = Array(size).fill().map(() => Array(size).fill(0));
+            revealed = Array(size).fill().map(() => Array(size).fill(false));
+            let mineCount = 0;
+
+            // Randomly place mines based on the number of mines selected
+            while (mineCount < mines) {
+                const row = Math.floor(Math.random() * size);
+                const col = Math.floor(Math.random() * size);
+                if (board[row][col] === 0) {
+                    board[row][col] = 'M';
+                    mineCount++;
+                }
+            }
+        };
+
+        const revealCell = (row, col) => {
+            if (revealed[row][col] || gameOver) return;
+
+            revealed[row][col] = true;
+            score += 1;
+            document.getElementById('score').innerText = `Score: ${score}`;
+
+            const cell = document.getElementById(`cell-${row}-${col}`);
+            cell.classList.add('revealed');
+
+            if (board[row][col] === 'M') {
+                cell.classList.add('explosion');
+                gameOver = true; // Set game over state
+                setTimeout(() => {
+                    alert('You hit a mine! Game over!');
+                    endGame();
+                }, 500); // Delay for the explosion effect
+            } else {
+                cell.innerText = ''; // No number to display
+                if (score === (size * size - mines)) {
+                    alert('Congratulations! You revealed all safe cells!');
+                    endGame();
+                }
+            }
+        };
+
+        const handleCellClick = (row, col) => {
+            revealCell(row, col);
+        };
+
+        const endGame = () => {
+            document.querySelectorAll('.cell').forEach(cell => {
+                if (board[cell.dataset.row][cell.dataset.col] === 'M') {
+                    cell.classList.add('explosion');
+                }
+                cell.removeEventListener('click', cell.clickEvent); // Remove event listeners
+            });
+            document.getElementById('restartGame').style.display = 'block'; // Show restart button
+        };
+
+        const renderGrid = () => {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            for (let row = 0; row < size; row++) {
+                for (let col = 0; col < size; col++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.id = `cell-${row}-${col}`;
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    cell.clickEvent = () => handleCellClick(row, col); // Save the click event
+                    cell.addEventListener('click', cell.clickEvent);
+                    grid.appendChild(cell);
+                }
+            }
+        };
+
+        const resetGame = () => {
+            score = 0;
+            gameOver = false;
+            document.getElementById('score').innerText = `Score: ${score}`;
+            document.getElementById('restartGame').style.display = 'none'; // Hide restart button
+            createBoard();
+            renderGrid();
+        };
+
+        document.getElementById('startGame').addEventListener('click', () => {
+            mines = parseInt(document.getElementById('mines').value);
+            if (mines < 1 || mines > 7) {
+                alert("Please enter a valid number of mines (1-7).");
+                return;
+            }
+            resetGame(); // Reset and start the game
+        });
+
+        document.getElementById('restartGame').addEventListener('click', resetGame); // Restart game button
+
+    </script>
+
+</body>
+</html>

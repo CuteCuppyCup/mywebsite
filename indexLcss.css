@@ -1,0 +1,162 @@
+/* Color Palette */
+.first-color { 
+  background: #fff6f6; /* Light background color */
+}
+  
+.second-color { 
+  background: #eea1eb; /* Light purple color */
+}
+
+.third-color { 
+  background: #cb22d7; /* Darker purple color */
+}
+
+.fourth-color { 
+  background: #891180; /* Dark magenta color */
+}
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('/index/mainbg.jpg'); /* Path to your image */
+  background-size: cover; /* Ensures the image covers the entire page */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed; /* Keeps the image fixed during scrolling */
+  background-position: center; /* Centers the image on the page */
+  color: #333; /* Default text color for contrast */
+}
+
+h1, h2, p {
+  margin: 0;
+}
+
+/* Header Styles */
+header {
+  width: 100%;
+  background-color: #000000; /* Header background color */
+  color: rgb(255, 255, 255); /* Text color remains white */
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Collapsible Menu Styles */
+.collapsible-menu {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 1rem;
+}
+
+.collapsible-button {
+  width: 100%;
+  background-color: #000000a2; /* Updated menu button background color */
+  color: white;
+  padding: 1rem;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.collapsible-button:hover {
+  background-color: #000000a8; /* Slightly darker on hover */
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #f4f4f4; /* Light background for content */
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 1rem;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+
+.collapsible-content.open {
+  max-height: 1000px;
+  padding: 1rem;
+}
+
+.content-box {
+  background-color: #ffffff;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.content-box:hover {
+  transform: translateY(-5px);
+}
+
+/* Game Block Styles */
+.game-section {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  max-width: 1200px;
+  padding: 2rem 0;
+  gap: 1rem;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.game-box {
+  flex: 1;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  background-color: #0000008f; /* Uniform background color for all tiles */
+  color: #ffffff; /* White text for visibility */
+}
+
+.game-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game-box h3 {
+  color: #ffffff; /* White text color for headings */
+  margin-bottom: 1rem;
+}
+
+/* Remove underline from links */
+.game-box a, .content-box a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-box a:focus, .content-box a:focus {
+  outline: none;
+}
+
+/* Footer Styles */
+footer {
+  width: 100%;
+  background-color: black; /* Footer background color */
+  color: white; /* White text color for contrast */
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-box, .game-box {
+      flex: 1 1 100%;
+  }
+
+  .game-section {
+      flex-direction: column;
+  }
+}
