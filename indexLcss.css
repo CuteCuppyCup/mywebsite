@@ -38,7 +38,7 @@ h1, h2, p {
 /* Header Styles */
 header {
   width: 100%;
-  background-color: #000000; /* Header background color */
+  background-color: #024898; /* Header background color */
   color: rgb(255, 255, 255); /* Text color remains white */
   padding: 1rem;
   text-align: center;
@@ -53,7 +53,7 @@ header {
 
 .collapsible-button {
   width: 100%;
-  background-color: #000000a2; /* Updated menu button background color */
+  background-color: #3E9EFF; /* Updated menu button background color */
   color: white;
   padding: 1rem;
   border: none;
@@ -64,7 +64,7 @@ header {
 }
 
 .collapsible-button:hover {
-  background-color: #000000a8; /* Slightly darker on hover */
+  background-color: #3f8bd6; /* Slightly darker on hover */
 }
 
 .collapsible-content {
@@ -114,8 +114,8 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  background-color: #0000008f; /* Uniform background color for all tiles */
-  color: #ffffff; /* White text for visibility */
+  background-color: #B2D9FF; /* Uniform background color for all tiles */
+  color: #000000; /* Black text for visibility */
 }
 
 .game-box:hover {
@@ -124,7 +124,7 @@ header {
 }
 
 .game-box h3 {
-  color: #ffffff; /* White text color for headings */
+  color: #000000; /* Black text color for headings */
   margin-bottom: 1rem;
 }
 
