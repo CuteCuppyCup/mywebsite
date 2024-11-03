@@ -6,11 +6,9 @@
 .second-color { 
   background: #eea1eb; /* Light purple color */
 }
-
 .third-color { 
   background: #cb22d7; /* Darker purple color */
 }
-
 .fourth-color { 
   background: #891180; /* Dark magenta color */
 }
@@ -23,11 +21,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('/index/mainbg.jpg'); /* Path to your image */
-  background-size: cover; /* Ensures the image covers the entire page */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  background-attachment: fixed; /* Keeps the image fixed during scrolling */
-  background-position: center; /* Centers the image on the page */
   color: #333; /* Default text color for contrast */
 }
 
@@ -107,7 +100,7 @@ header {
 }
 
 .game-box {
-  flex: 1;
+  flex: 1 1 calc(33.333% - 1rem); /* Three boxes per row with margin */
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
@@ -152,11 +145,21 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .content-box, .game-box {
-      flex: 1 1 100%;
+  .collapsible-button {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .game-box {
+    flex: 1 1 100%; /* Stack game boxes on small screens */
+    margin-bottom: 1rem; /* Add margin between stacked boxes */
+  }
+
+  .content-box {
+    margin: 1rem 0;
   }
 
   .game-section {
-      flex-direction: column;
+    flex-direction: column; /* Stack sections vertically on small screens */
+    align-items: center; /* Center align */
   }
 }
